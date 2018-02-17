@@ -1,1 +1,1 @@
-web: gunicorn ecp.wsgi
+web: gunicorn cetool.wsgi
