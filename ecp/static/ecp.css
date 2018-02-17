@@ -1,0 +1,38 @@
+#id_performer {
+    height: 50px;
+}
+
+.calendar-table {
+
+}
+
+.calendar-table td {
+    position: relative;
+    color: #888;
+}
+
+.calendar-table tr td:nth-child(6) {
+    color: #6c757d;
+}
+
+.calendar-table tr td:nth-child(7) {
+    color: red;
+}
+
+.calendar-table span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 10px;
+    background: #e9ecef;
+    padding: 1px 5px 5px 5px;
+    width: 30px;
+    text-align: right;
+}
+
+.calendar-table input {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    outline: 0;
+}

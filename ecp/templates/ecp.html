@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+
+<h1>
+    Ewidencja czasu pracy
+</h1>
+
+<hr/>
+
+<form action="/ecp/" method="post">{% csrf_token %}
+
+    <div class="row">
+        <div class="col-md-5">
+            {% bootstrap_field form.performer size='small' %}
+
+            <div class="row">
+                <div class="col-sm-6">
+                    {% bootstrap_field form.year %}
+                </div>
+                <div class="col-sm-6">
+                    {% bootstrap_field form.month %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    {% bootstrap_field form.hours_sum %}
+                </div>
+                <div class="col-sm-4">
+                    {% bootstrap_field form.hourly_bid %}
+                </div>
+                <div class="col-sm-4">
+                    {% bootstrap_field form.sum %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" id="days">
+
+        </div>
+    </div>
+
+    <input type="submit" value="Generuj PDF" class="btn btn-success btn-block"/>
+</form>
+
+<script type="text/javascript">
+
+// these are labels for the days of the week
+cal_days_labels = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'So', 'Ndz'];
+
+// these are the days of the week for each month, in order
+cal_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+
+function create_calendar(){
+
+    month = $('#id_month').val()-1;
+    year = $('#id_year').val();
+
+    recalculate();
+
+  // get first day of month
+  var firstDay = new Date(year, month, 1);
+  var startingDay = (firstDay.getDay() || 7) -1;
+  console.info({
+    'f': startingDay,
+    'month': month,
+    'year': year
+  });
+
+  // find number of days in month
+  var monthLength = cal_days_in_month[month];
+
+  // compensate for leap year
+  if (month == 1) { // February only!
+    if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+      monthLength = 29;
+    }
+  }
+
+  // do the header
+  var html = '<table class="calendar-table table table-bordered">';
+  html += '<thead><tr class="calendar-header">';
+  for(var i = 0; i <= 6; i++ ){
+    html += '<th class="calendar-header-day" width="14.28%">';
+    html += cal_days_labels[i];
+    html += '</th>';
+  }
+  html += '</tr></thead><tr>';
+
+  // fill in the days
+  var day = 1;
+  // this loop is for is weeks (rows)
+  for (var i = 0; i < 9; i++) {
+    // this loop is for weekdays (cells)
+    for (var j = 0; j <= 6; j++) {
+      html += '<td class="calendar-day">';
+      if (day <= monthLength && (i > 0 || j >= startingDay)) {
+        html += '<span>' + day + '</span>';
+
+        html += '<input type="text" name="day-' + day + '" value="0"/>';
+
+        day++;
+      }
+      html += '</td>';
+    }
+    // stop making rows if we've run out of days
+    if (day > monthLength) {
+      break;
+    } else {
+      html += '</tr><tr>';
+    }
+  }
+  html += '</tr></table>';
+
+  $('#days').html( html );
+}
+
+function recalculate() {
+    $('#id_hours_sum').val(0);
+    $('#id_sum').val(0);
+
+    var sum = 0;
+    $('.calendar-table input').each(function(){
+        sum += parseFloat($(this).val());
+    });
+
+     $('#id_hours_sum').val(sum);
+     $('#id_sum').val(sum * parseFloat($('#id_hourly_bid').val()));
+}
+
+$('body').on('change', '.calendar-table input', recalculate)
+$('#id_hourly_bid').change(recalculate);
+$('#id_month').change(create_calendar);
+$('#id_year').change(create_calendar);
+
+create_calendar();
+
+
+
+
+
+</script>
+
+
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'ecp.css' %}"/>
+{% endblock %}
