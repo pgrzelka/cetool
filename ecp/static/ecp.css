@@ -1,5 +1,5 @@
 #id_performer {
-    height: 50px;
+    height: 120px;
 }
 
 .calendar-table {
@@ -19,20 +19,18 @@
     color: red;
 }
 
-.calendar-table span {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 0 0 0 10px;
-    background: #e9ecef;
-    padding: 1px 5px 5px 5px;
-    width: 30px;
-    text-align: right;
+.calendar-table input {
+    width: 100%;
+    text-align: center;
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    outline: 0;
 }
 
-.calendar-table input {
+.calendar-table textarea {
     width: 100%;
     border: 0;
     border-bottom: 1px dashed #ccc;
     outline: 0;
+    margin-top: 10px;
 }

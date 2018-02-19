@@ -15,7 +15,8 @@
     <div class="row">
         <div class="col-md-5">
             {% bootstrap_field form.performer size='small' %}
-
+        </div>
+        <div class="col-md-7">
             <div class="row">
                 <div class="col-sm-6">
                     {% bootstrap_field form.year %}
@@ -37,9 +38,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7" id="days">
+    </div>
 
-        </div>
+    <div id="days">
+
     </div>
 
     <input type="submit" value="Generuj PDF" class="btn btn-success btn-block"/>
@@ -98,9 +100,13 @@ function create_calendar(){
     for (var j = 0; j <= 6; j++) {
       html += '<td class="calendar-day">';
       if (day <= monthLength && (i > 0 || j >= startingDay)) {
-        html += '<span>' + day + '</span>';
 
-        html += '<input type="text" name="day-' + day + '" value="0"/>';
+        html += '<div class="row">';
+        html += '<div class="col-md-3 text-right">dzień:</div><div class="col-md-3"><input type="text" value="'+day+'" readonly="readonly"></div>';
+        html += '<div class="col-md-3 text-right">godzin:</div><div class="col-md-3"><input class="h" type="text" name="day-' + day + '" value="0"></div>';
+        html += '</div>';
+
+        html += '<textarea name="desc-' + day + '" placeholder="Opis"></textarea>';
 
         day++;
       }
@@ -123,7 +129,7 @@ function recalculate() {
     $('#id_sum').val(0);
 
     var sum = 0;
-    $('.calendar-table input').each(function(){
+    $('.calendar-table input.h').each(function(){
         sum += parseFloat($(this).val());
     });
 

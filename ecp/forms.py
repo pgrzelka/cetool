@@ -17,4 +17,5 @@ class EcpForm(forms.Form):
         counter = 1
         for q in range(1, 32):
             self.fields['day-' + str(counter)] = forms.CharField(label="Dzień {}".format(q), initial=0, required=False)
+            self.fields['desc-' + str(counter)] = forms.CharField(label="Opis {}".format(q), initial="", required=False)
             counter += 1
