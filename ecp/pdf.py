@@ -19,7 +19,7 @@ p = PS(name='p',
        leading=10,
        spaceAfter=10)
 
-months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpierń", "Wrzesień", "Październik",
+months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik",
           "Listopad", "Grudzień"]
 days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
